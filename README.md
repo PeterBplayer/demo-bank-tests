@@ -25,6 +25,8 @@
   `npx playwright show-trace trace.zip`
 - cancelling Node process  
   hit twice <kbd>Ctrl</kbd> + <kbd>C</kbd>
+- run tests in one dir
+  `npx playwright test tests/[test file]`
 
 ## Playwright Config modifications
 
