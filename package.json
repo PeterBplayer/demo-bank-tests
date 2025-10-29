@@ -9,7 +9,8 @@
     "test:homepage": "npm run test tests/homepage.spec.ts",
     "test:homepage:headed": "npm run test tests/homepage.spec.ts -- --headed",
     "test:login": "npm run test tests/login.spec.ts",
-    "test:login:headed": "npm run test tests/login.spec.ts -- --headed"
+    "test:login:headed": "npm run test tests/login.spec.ts -- --headed",
+    "format": "npx prettier --write ."
   },
   "keywords": [],
   "author": "",
