@@ -35,9 +35,7 @@ test.describe('Homepage tests', () => {
     await page.getByTestId('close-button').click();
 
     //Assert
-    await expect(homepage.transferConfirmationMessage).toHaveText(
-      expectedMessage,
-    );
+    await expect(homepage.confirmationMessage).toHaveText(expectedMessage);
   });
 
   test('successful mobile top-up', async ({ page }) => {
@@ -58,9 +56,7 @@ test.describe('Homepage tests', () => {
 
     //Assert
 
-    await expect(homepage.transferConfirmationMessage).toHaveText(
-      expectedMessage,
-    );
+    await expect(homepage.confirmationMessage).toHaveText(expectedMessage);
   });
 
   test('correct balance after successful mobile top-up', async ({ page }) => {
