@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { loginData } from '../test-data/login.data';
 import { LoginPage } from '../pages/login.page';
+import { HomePage } from '../pages/homepage.page';
 
 test.describe('Homepage tests', () => {
   test.beforeEach(async ({ page }) => {
@@ -25,16 +26,18 @@ test.describe('Homepage tests', () => {
     const expectedMessage = `Przelew wykonany! ${expectedTransferReceiver} - ${transferAmount},00PLN - ${transferTitle}`;
 
     //Act
-
-    await page.locator('#widget_1_transfer_receiver').selectOption(receiverID);
-    await page.locator('#widget_1_transfer_amount').fill(transferAmount);
-    await page.locator('#widget_1_transfer_title').fill(transferTitle);
-    await page.getByRole('button', { name: 'wykonaj' }).click();
+    const homepage = new HomePage(page);
+    await homepage.transferReceiver.selectOption(receiverID);
+    await homepage.transferAmount.fill(transferAmount);
+    await homepage.transferTitle.fill(transferTitle);
+    await homepage.transferButton.click();
 
     await page.getByTestId('close-button').click();
 
     //Assert
-    await expect(page.locator('#show_messages')).toHaveText(expectedMessage);
+    await expect(homepage.transferConfirmationMessage).toHaveText(
+      expectedMessage,
+    );
   });
 
   test('successful mobile top-up', async ({ page }) => {
@@ -45,16 +48,19 @@ test.describe('Homepage tests', () => {
     const expectedMessage = `Doładowanie wykonane! ${topUpAmount},00PLN na numer ${topUpReceiver}`;
 
     //Act
+    const homepage = new HomePage(page);
+    await homepage.topUpReceiver.selectOption(topUpReceiver);
+    await homepage.topUpAmount.fill(topUpAmount);
+    await homepage.topUpAgreementCheckbox.click();
+    await homepage.topUpButton.click();
 
-    await page.locator('#widget_1_topup_receiver').selectOption(topUpReceiver);
-    await page.locator('#widget_1_topup_amount').fill(topUpAmount);
-    await page.locator('#uniform-widget_1_topup_agreement').click();
-    await page.getByRole('button', { name: 'doładuj telefon' }).click();
     await page.getByTestId('close-button').click();
 
     //Assert
 
-    await expect(page.locator('#show_messages')).toHaveText(expectedMessage);
+    await expect(homepage.transferConfirmationMessage).toHaveText(
+      expectedMessage,
+    );
   });
 
   test('correct balance after successful mobile top-up', async ({ page }) => {
@@ -67,14 +73,15 @@ test.describe('Homepage tests', () => {
 
     //Act
 
-    await page.locator('#widget_1_topup_receiver').selectOption(topUpReceiver);
-    await page.locator('#widget_1_topup_amount').fill(topUpAmount);
-    await page.locator('#uniform-widget_1_topup_agreement').click();
-    await page.getByRole('button', { name: 'doładuj telefon' }).click();
-    await page.getByTestId('close-button').click();
+    const homepage = new HomePage(page);
+    await homepage.topUpReceiver.selectOption(topUpReceiver);
+    await homepage.topUpAmount.fill(topUpAmount);
+    await homepage.topUpAgreementCheckbox.click();
+    await homepage.topUpButton.click();
 
+    await page.getByTestId('close-button').click();
     //Assert
 
-    await expect(page.locator('#money_value')).toHaveText(`${expectedBalance}`);
+    await expect(homepage.moneyBalance).toHaveText(`${expectedBalance}`);
   });
 });
