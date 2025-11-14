@@ -27,15 +27,14 @@ test.describe('Homepage tests', () => {
 
     //Act
     const homepage = new HomePage(page);
-    await homepage.transferReceiver.selectOption(receiverID);
-    await homepage.transferAmount.fill(transferAmount);
-    await homepage.transferTitle.fill(transferTitle);
+    await homepage.transferReceiverInput.selectOption(receiverID);
+    await homepage.transferAmountInput.fill(transferAmount);
+    await homepage.transferTitleInput.fill(transferTitle);
     await homepage.transferButton.click();
-
-    await page.getByTestId('close-button').click();
+    await homepage.actionCloseButton.click();
 
     //Assert
-    await expect(homepage.confirmationMessage).toHaveText(expectedMessage);
+    await expect(homepage.messageText).toHaveText(expectedMessage);
   });
 
   test('successful mobile top-up', async ({ page }) => {
@@ -47,16 +46,16 @@ test.describe('Homepage tests', () => {
 
     //Act
     const homepage = new HomePage(page);
-    await homepage.topUpReceiver.selectOption(topUpReceiver);
-    await homepage.topUpAmount.fill(topUpAmount);
+    await homepage.topUpReceiverInput.selectOption(topUpReceiver);
+    await homepage.topUpAmountInput.fill(topUpAmount);
     await homepage.topUpAgreementCheckbox.click();
     await homepage.topUpButton.click();
 
-    await page.getByTestId('close-button').click();
+    await homepage.actionCloseButton.click();
 
     //Assert
 
-    await expect(homepage.confirmationMessage).toHaveText(expectedMessage);
+    await expect(homepage.messageText).toHaveText(expectedMessage);
   });
 
   test('correct balance after successful mobile top-up', async ({ page }) => {
@@ -70,14 +69,14 @@ test.describe('Homepage tests', () => {
     //Act
 
     const homepage = new HomePage(page);
-    await homepage.topUpReceiver.selectOption(topUpReceiver);
-    await homepage.topUpAmount.fill(topUpAmount);
+    await homepage.topUpReceiverInput.selectOption(topUpReceiver);
+    await homepage.topUpAmountInput.fill(topUpAmount);
     await homepage.topUpAgreementCheckbox.click();
     await homepage.topUpButton.click();
 
-    await page.getByTestId('close-button').click();
+    await homepage.actionCloseButton.click();
     //Assert
 
-    await expect(homepage.moneyBalance).toHaveText(`${expectedBalance}`);
+    await expect(homepage.moneyBalanceText).toHaveText(`${expectedBalance}`);
   });
 });

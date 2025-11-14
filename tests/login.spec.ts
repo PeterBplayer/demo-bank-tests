@@ -22,7 +22,7 @@ test.describe('Login to Demobank', () => {
 
     //Assert
     const homePage = new HomePage(page);
-    await expect(homePage.userName).toHaveText(expectedUserName);
+    await expect(homePage.userNameText).toHaveText(expectedUserName);
   });
 
   test('unsuccessful login with too short username', async ({ page }) => {

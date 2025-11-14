@@ -27,14 +27,13 @@ test.describe('Payment tests', () => {
 
     //Act
     const paymentPage = new PaymentPage(page);
-    await paymentPage.transferReceiver.fill(transferReceiver);
-    await paymentPage.transferAccount.fill(transferAccount);
-    await paymentPage.transferAmount.fill(transferAmount);
+    await paymentPage.transferReceiverInput.fill(transferReceiver);
+    await paymentPage.transferAccountInput.fill(transferAccount);
+    await paymentPage.transferAmountInput.fill(transferAmount);
     await paymentPage.executeTransferButton.click();
-
-    await page.getByTestId('close-button').click();
+    await paymentPage.actionCloseButton.click();
 
     //Assert
-    await expect(paymentPage.confirmationMessage).toHaveText(expectedMessage);
+    await expect(paymentPage.messageText).toHaveText(expectedMessage);
   });
 });
