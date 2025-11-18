@@ -27,11 +27,11 @@ test.describe('Homepage tests', () => {
     const expectedMessage = `Przelew wykonany! ${expectedTransferReceiver} - ${transferAmount},00PLN - ${transferTitle}`;
 
     //Act
-    await homePage.transferReceiverInput.selectOption(receiverID);
-    await homePage.transferAmountInput.fill(transferAmount);
-    await homePage.transferTitleInput.fill(transferTitle);
-    await homePage.transferButton.click();
-    await homePage.actionCloseButton.click();
+    await homePage.quickMoneyTransfer(
+      receiverID,
+      transferAmount,
+      transferTitle,
+    );
 
     //Assert
     await expect(homePage.messageText).toHaveText(expectedMessage);
@@ -44,12 +44,7 @@ test.describe('Homepage tests', () => {
     const expectedMessage = `Doładowanie wykonane! ${topUpAmount},00PLN na numer ${topUpReceiver}`;
 
     //Act
-    await homePage.topUpReceiverInput.selectOption(topUpReceiver);
-    await homePage.topUpAmountInput.fill(topUpAmount);
-    await homePage.topUpAgreementCheckbox.click();
-    await homePage.topUpButton.click();
-
-    await homePage.actionCloseButton.click();
+    await homePage.mobileTopUp(topUpReceiver, topUpAmount);
 
     //Assert
     await expect(homePage.messageText).toHaveText(expectedMessage);
@@ -63,12 +58,7 @@ test.describe('Homepage tests', () => {
     const expectedBalance = Number(initialBalance) - Number(topUpAmount);
 
     //Act
-    await homePage.topUpReceiverInput.selectOption(topUpReceiver);
-    await homePage.topUpAmountInput.fill(topUpAmount);
-    await homePage.topUpAgreementCheckbox.click();
-    await homePage.topUpButton.click();
-
-    await homePage.actionCloseButton.click();
+    await homePage.mobileTopUp(topUpReceiver, topUpAmount);
 
     //Assert
     await expect(homePage.moneyBalanceText).toHaveText(`${expectedBalance}`);
