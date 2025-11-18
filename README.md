@@ -28,6 +28,16 @@
 - run tests in one dir
   `npx playwright test tests/[test file]`
 
+  ## Updating Playwright
+  - check if Playwright should be updated  
+    `npm outdated @playwright/test`
+  - update Playwright  
+    `npm i @playwright/test`
+  - update browsers  
+    `npx playwright install`
+  - verify Playwright version  
+    `npx @playwright/test --version`
+
 ## Playwright Config modifications
 
 - config file `playwright.config.ts`
