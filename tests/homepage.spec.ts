@@ -27,7 +27,7 @@ test.describe('Homepage tests', () => {
     const expectedMessage = `Przelew wykonany! ${expectedTransferReceiver} - ${transferAmount},00PLN - ${transferTitle}`;
 
     //Act
-    await homePage.quickMoneyTransfer(
+    await homePage.executeQuickMoneyTransfer(
       receiverID,
       transferAmount,
       transferTitle,
@@ -44,7 +44,7 @@ test.describe('Homepage tests', () => {
     const expectedMessage = `Doładowanie wykonane! ${topUpAmount},00PLN na numer ${topUpReceiver}`;
 
     //Act
-    await homePage.mobileTopUp(topUpReceiver, topUpAmount);
+    await homePage.executeMobileTopUp(topUpReceiver, topUpAmount);
 
     //Assert
     await expect(homePage.messageText).toHaveText(expectedMessage);
@@ -58,7 +58,7 @@ test.describe('Homepage tests', () => {
     const expectedBalance = Number(initialBalance) - Number(topUpAmount);
 
     //Act
-    await homePage.mobileTopUp(topUpReceiver, topUpAmount);
+    await homePage.executeMobileTopUp(topUpReceiver, topUpAmount);
 
     //Assert
     await expect(homePage.moneyBalanceText).toHaveText(`${expectedBalance}`);

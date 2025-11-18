@@ -48,7 +48,7 @@ export class HomePage {
     this.messageText = this.page.locator('#show_messages');
   }
 
-  async quickMoneyTransfer(
+  async executeQuickMoneyTransfer(
     receiverID: string,
     transferAmount: string,
     transferTitle: string,
@@ -61,7 +61,10 @@ export class HomePage {
     await this.actionCloseButton.click();
   }
 
-  async mobileTopUp(topUpReceiver: string, topUpAmount: string): Promise<void> {
+  async executeMobileTopUp(
+    topUpReceiver: string,
+    topUpAmount: string,
+  ): Promise<void> {
     await this.topUpReceiverInput.selectOption(topUpReceiver);
     await this.topUpAmountInput.fill(topUpAmount);
     await this.topUpAgreementCheckbox.click();
