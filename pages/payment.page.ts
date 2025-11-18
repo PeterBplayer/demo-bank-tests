@@ -1,6 +1,8 @@
 import { Locator, Page } from '@playwright/test';
+import { SideMenuComponent } from '../components/side-menu.component';
 
 export class PaymentPage {
+  sideMenu: SideMenuComponent;
   transferReceiverInput: Locator;
   transferAccountInput: Locator;
   transferAmountInput: Locator;
@@ -9,6 +11,7 @@ export class PaymentPage {
   messageText: Locator;
 
   constructor(private page: Page) {
+    this.sideMenu = new SideMenuComponent(this.page);
     this.transferReceiverInput = page.getByTestId('transfer_receiver');
     this.transferAccountInput = page.getByTestId('form_account_to');
     this.transferAmountInput = page.getByTestId('form_amount');
