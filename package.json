@@ -10,6 +10,7 @@
     "test:homepage:headed": "npm run test tests/homepage.spec.ts -- --headed",
     "test:login": "npm run test tests/login.spec.ts",
     "test:login:headed": "npm run test tests/login.spec.ts -- --headed",
+    "test:login:tagged:login": "npx playwright test --grep \"@login\"",
     "format": "npx prettier --write ."
   },
   "keywords": [],

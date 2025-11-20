@@ -18,26 +18,30 @@ test.describe('Homepage tests', () => {
     homePage = new HomePage(page);
   });
 
-  test('quick payment with correct data', async ({ page }) => {
-    //Arrange
-    const receiverID = '2';
-    const transferAmount = '150';
-    const transferTitle = 'pizza';
-    const expectedTransferReceiver = 'Chuck Demobankowy';
-    const expectedMessage = `Przelew wykonany! ${expectedTransferReceiver} - ${transferAmount},00PLN - ${transferTitle}`;
+  test(
+    'quick payment with correct data',
+    { tag: ['@homepage', '@payment'] },
+    async ({ page }) => {
+      //Arrange
+      const receiverID = '2';
+      const transferAmount = '150';
+      const transferTitle = 'pizza';
+      const expectedTransferReceiver = 'Chuck Demobankowy';
+      const expectedMessage = `Przelew wykonany! ${expectedTransferReceiver} - ${transferAmount},00PLN - ${transferTitle}`;
 
-    //Act
-    await homePage.executeQuickMoneyTransfer(
-      receiverID,
-      transferAmount,
-      transferTitle,
-    );
+      //Act
+      await homePage.executeQuickMoneyTransfer(
+        receiverID,
+        transferAmount,
+        transferTitle,
+      );
 
-    //Assert
-    await expect(homePage.messageText).toHaveText(expectedMessage);
-  });
+      //Assert
+      await expect(homePage.messageText).toHaveText(expectedMessage);
+    },
+  );
 
-  test('successful mobile top-up', async ({ page }) => {
+  test('successful mobile top-up', { tag: '@homepage' }, async ({ page }) => {
     //Arrange
     const topUpReceiver = '500 xxx xxx';
     const topUpAmount = '50';
@@ -50,17 +54,21 @@ test.describe('Homepage tests', () => {
     await expect(homePage.messageText).toHaveText(expectedMessage);
   });
 
-  test('correct balance after successful mobile top-up', async ({ page }) => {
-    //Arrange
-    const topUpReceiver = '500 xxx xxx';
-    const topUpAmount = '50';
-    const initialBalance = await page.locator('#money_value').innerText();
-    const expectedBalance = Number(initialBalance) - Number(topUpAmount);
+  test(
+    'correct balance after successful mobile top-up',
+    { tag: '@homepage' },
+    async ({ page }) => {
+      //Arrange
+      const topUpReceiver = '500 xxx xxx';
+      const topUpAmount = '50';
+      const initialBalance = await page.locator('#money_value').innerText();
+      const expectedBalance = Number(initialBalance) - Number(topUpAmount);
 
-    //Act
-    await homePage.executeMobileTopUp(topUpReceiver, topUpAmount);
+      //Act
+      await homePage.executeMobileTopUp(topUpReceiver, topUpAmount);
 
-    //Assert
-    await expect(homePage.moneyBalanceText).toHaveText(`${expectedBalance}`);
-  });
+      //Assert
+      await expect(homePage.moneyBalanceText).toHaveText(`${expectedBalance}`);
+    },
+  );
 });

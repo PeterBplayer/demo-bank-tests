@@ -22,7 +22,7 @@ test.describe('Payment tests', () => {
     paymentPage = new PaymentPage(page);
   });
 
-  test('simple payment', async ({ page }) => {
+  test('simple payment', { tag: '@payment' }, async ({ page }) => {
     //Arrange
     const transferReceiver = 'Jan Nowak';
     const transferAccount = '12 3456 7891 2345 6789 4567 89899';
